@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Antenato Menü - Kesin 4 Sayfa</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #999; font-family: 'Caveat', cursive; color: #000; }
+
+/* HER SAYFAYI A4 BOYUTUNDA BİR KUTUYA Hapsediyoruz */
+.page {
+  width: 210mm;
+  height: 297mm;
+  background: white;
+  margin: 10px auto;
+  padding: 10mm 15mm;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  position: relative;
+  overflow: hidden; /* Sayfa dışına taşmayı ve sayfaların birbirini itmesini kesin engeller */
+  page-break-after: always;
+}
+
+/* HEADER */
+.header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 1mm; margin-bottom: 3mm; }
+.brand-name { font-size: 34pt; font-weight: 700; letter-spacing: 2px; line-height: 1; }
+.brand-sub  { font-size: 14pt; letter-spacing: 3px; margin-top: 0.5mm; }
+
+/* SECTION TITLE */
+.sec { display: flex; align-items: center; gap: 3mm; margin-top: 3mm; margin-bottom: 2mm; }
+.sec h2 { font-size: 21pt; font-weight: 700; white-space: nowrap; line-height: 1; }
+.sec .tl { flex: 1; border-bottom: 1.5px solid #000; }
+
+/* PRICE COLUMN HEADER */
+.phdr { display: grid; grid-template-columns: 1fr 22mm 22mm 22mm; gap: 2.5mm; padding-bottom: 0.5mm; border-bottom: 1px solid #000; margin-bottom: 1mm; }
+.phdr .ph { font-size: 13pt; font-weight: 700; text-align: center; line-height: 1.1; }
+.phdr .ph small { font-size: 10.5pt; font-weight: 400; display: block; }
+
+/* ROW STYLE */
+.pr { display: grid; grid-template-columns: 1fr 22mm 22mm 22mm; gap: 2.5mm; align-items: center; padding: 1.5mm 0; border-bottom: 1px dashed #aaa; }
+.pn { font-size: 14.5pt; font-weight: 700; line-height: 1.1; }
+.pn .kcal { font-size: 12pt; font-weight: 400; opacity: 0.75; }
+.pi { font-size: 13pt; opacity: 0.9; line-height: 1.1; margin-top: 0.2mm; }
+.pb { border: 2px solid #000; border-radius: 4px; min-height: 8.5mm; width: 100%; font-size: 13.5pt; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+
+/* GROUP DIVIDER */
+.gdiv { text-align: center; margin: 3mm 0; position: relative; }
+.gdiv::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; border-top: 1px solid #000; }
+.gdiv span { background: white; padding: 0 4mm; font-size: 14pt; font-weight: 700; letter-spacing: 1.5px; position: relative; }
+
+/* CAMPAIGN BOX */
+.campbox { border: 2px solid #000; border-radius: 6px; padding: 3mm; margin-top: 2mm; display: flex; align-items: center; justify-content: space-between; gap: 4mm; }
+.campbox .ct { font-size: 15.5pt; font-weight: 700; }
+.campbox .cs { font-size: 13.5pt; opacity: 0.85; margin-top: 0.2mm; }
+.cprices { display: flex; gap: 3mm; flex-shrink: 0; }
+.cpi { text-align: center; }
+.cpi .cl { font-size: 12pt; font-weight: 700; display: block; }
+.cpi .cpb { border: 2px solid #000; border-radius: 4px; min-height: 8.5mm; width: 21mm; display: flex; margin-top: 1mm; align-items: center; justify-content: center; font-size: 13.5pt; font-weight: 700; }
+
+/* BURGER ROW */
+.br { display: flex; align-items: center; justify-content: space-between; gap: 3mm; padding: 1.5mm 0; border-bottom: 1px dashed #aaa; }
+.bi { flex: 1; }
+.bn { font-size: 14.5pt; font-weight: 700; line-height: 1.1; }
+.bn .kcal { font-size: 12pt; font-weight: 400; opacity: 0.75; }
+.bing { font-size: 13pt; opacity: 0.9; line-height: 1.1; margin-top: 0.2mm; }
+.bpb { border: 2px solid #000; border-radius: 4px; min-height: 8.5mm; min-width: 22mm; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 13.5pt; font-weight: 700; }
+
+/* MENU BOX */
+.menubox { border: 2px solid #000; border-radius: 6px; padding: 3mm; margin-top: 1mm; }
+.menubox .mbt { font-size: 15.5pt; font-weight: 700; border-bottom: 1px solid #000; padding-bottom: 1mm; margin-bottom: 1.5mm; }
+.ml { display: flex; align-items: baseline; justify-content: space-between; padding: 1.5mm 0; border-bottom: 1px dashed #aaa; gap: 3mm; }
+.ml:last-child { border-bottom: none; }
+.ml .mln { font-size: 14pt; font-weight: 700; }
+.ml .mls { font-size: 12.5pt; opacity: 0.85; display: block; margin-top: 0.2mm; }
+.ml .mlpb { border: 2px solid #000; border-radius: 4px; min-height: 8.5mm; min-width: 22mm; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 13.5pt; font-weight: 700; }
+
+/* SIMPLE ROW */
+.sr { display: flex; align-items: center; justify-content: space-between; gap: 3mm; padding: 1.5mm 0; border-bottom: 1px dashed #aaa; }
+.srn { font-size: 14.5pt; font-weight: 700; line-height: 1.1; }
+.srn .kcal { font-size: 12pt; font-weight: 400; opacity: 0.75; }
+.srs { font-size: 13pt; opacity: 0.85; display: block; margin-top: 0.2mm; }
+.spb { border: 2px solid #000; border-radius: 4px; min-height: 8.5mm; min-width: 22mm; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 13.5pt; font-weight: 700; }
+
+/* YAN GRID */
+.yang { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; margin-top: 2mm; }
+.yc { border: 2px solid #000; border-radius: 6px; padding: 2.5mm; text-align: center; }
+.yc.mega { grid-column: 1 / -1; }
+.yc .ycn { font-size: 14.5pt; font-weight: 700; display: block; }
+.yc .ycs { font-size: 12.5pt; opacity: 0.85; display: block; margin-top: 0.2mm; }
+.yc .ycpb { border: 2px solid #000; border-radius: 4px; min-height: 8.5mm; width: 22mm; display: inline-flex; align-items: center; justify-content: center; font-size: 13.5pt; font-weight: 700; margin-top: 1.5mm; }
+
+/* ALLERGEN SECTION */
+.alerjen-box { border: 2px solid #000; border-radius: 6px; padding: 3mm; margin-top: 3mm; }
+.alerjen-box .abt { font-size: 14pt; font-weight: 700; border-bottom: 1px solid #000; padding-bottom: 1mm; margin-bottom: 1.5mm; }
+.alerjen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1mm 4mm; }
+.alerjen-item { font-size: 12.5pt; line-height: 1.1; }
+.alerjen-note { font-size: 12pt; opacity: 0.75; margin-top: 2mm; border-top: 1px dashed #aaa; padding-top: 1.5mm; line-height: 1.1; }
+
+.deco { text-align: center; font-size: 12pt; opacity: 0.2; letter-spacing: 4px; margin: 3mm 0; }
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+@media print {
+  body { background: none; }
+  .page { margin: 0; border: none; box-shadow: none; height: 297mm; width: 210mm; }
+}
+</style>
+</head>
+<body>
+
+  <!-- ================= SAYFA 1: PIZZALAR ================= -->
+  <div class="page">
+    <div class="header">
+      <div class="brand-name">ANTENATO</div>
+      <div class="brand-sub">Pizza &amp; Burger</div>
+    </div>
+
+    <div class="sec"><h2>Pizza</h2><div class="tl"></div></div>
+    <div style="font-size:11pt; opacity:0.65; text-align:right; margin-bottom:2mm; font-weight: 600;">* Kalori değerleri orta boy (26cm) pizza içindir</div>
+
+    <div class="phdr">
+      <div></div>
+      <div class="ph">Orta<small>26 cm</small></div>
+      <div class="ph">Büyük<small>32 cm</small></div>
+      <div class="ph">XL<small>36 cm</small></div>
+    </div>
+
+    <div class="pr"><div><div class="pn">Ultra Karışık Pizza <span class="kcal">(900-1100 kcal)</span></div><div class="pi">Sucuk · Salam · Sosis · Mantar · Biber · Zeytin · Mısır</div></div><div class="pb">150</div><div class="pb">250</div><div class="pb">320</div></div>
+    <div class="pr"><div><div class="pn">Gurme Sucuklu Pizza <span class="kcal">(750-900 kcal)</span></div><div class="pi">Sucuk · Biber · Mantar · Zeytin</div></div><div class="pb">160</div><div class="pb">260</div><div class="pb">320</div></div>
+    <div class="pr"><div><div class="pn">Supreme Pizza <span class="kcal">(700-850 kcal)</span></div><div class="pi">Sosis · Mısır · Zeytin</div></div><div class="pb">150</div><div class="pb">250</div><div class="pb">300</div></div>
+    <div class="pr"><div><div class="pn">Salamlı Pizza <span class="kcal">(680-820 kcal)</span></div><div class="pi">Salam · Biber · Zeytin</div></div><div class="pb">150</div><div class="pb">250</div><div class="pb">300</div></div>
+    <div class="pr"><div><div class="pn">Acılı Sucuklu Pizza <span class="kcal">(750-900 kcal)</span></div><div class="pi">Sucuk · Jalapeño · Biber · Zeytin</div></div><div class="pb">150</div><div class="pb">250</div><div class="pb">300</div></div>
+    <div class="pr"><div><div class="pn">Vegi Pizza <span class="kcal">(580-700 kcal)</span></div><div class="pi">Biber · Mantar · Zeytin · Mısır · Domates</div></div><div class="pb">150</div><div class="pb">250</div><div class="pb">300</div></div>
+    <div class="pr"><div><div class="pn">Milano Pizza <span class="kcal">(720-850 kcal)</span></div><div class="pi">Sucuk · Kırmızı Toz Biber</div></div><div class="pb">150</div><div class="pb">250</div><div class="pb">300</div></div>
+    <div class="pr"><div><div class="pn">Margarita Pizza <span class="kcal">(550-680 kcal)</span></div><div class="pi">Mozzarella · Domates</div></div><div class="pb">130</div><div class="pb">220</div><div class="pb">270</div></div>
+    <div class="pr"><div><div class="pn">Et Gurme Pizza <span class="kcal">(850-1000 kcal)</span></div><div class="pi">Sucuk · Salam · Sosis</div></div><div class="pb">170</div><div class="pb">280</div><div class="pb">340</div></div>
+    <div class="pr"><div><div class="pn">Akdeniz Pizza <span class="kcal">(720-880 kcal)</span></div><div class="pi">Küp Peynir · Biber · Mantar · Zeytin · Domates</div></div><div class="pb">170</div><div class="pb">280</div><div class="pb">340</div></div>
+    <div class="pr"><div><div class="pn">4 Peynirli Pizza <span class="kcal">(900-1100 kcal)</span></div><div class="pi">Mozzarella · Çedar · Beyaz Peynir · Kaşar</div></div><div class="pb">170</div><div class="pb">280</div><div class="pb">340</div></div>
+
+    <div class="gdiv"><span>— Özel Pizzalar —</span></div>
+
+    <div class="pr"><div><div class="pn">Ton Balıklı Pizza <span class="kcal">(680-800 kcal)</span></div><div class="pi">Ton Balığı · Soğan · Domates · Mısır</div></div><div class="pb">200</div><div class="pb">350</div><div class="pb">400</div></div>
+    <div class="pr"><div><div class="pn">Kavurmalı Pizza <span class="kcal">(820-980 kcal)</span></div><div class="pi">Kavurma · Biber · Domates · Soğan</div></div><div class="pb">200</div><div class="pb">350</div><div class="pb">400</div></div>
+    <div class="pr"><div><div class="pn">Pastırmalı Pizza <span class="kcal">(780-920 kcal)</span></div><div class="pi">Pastırma · Biber · Domates</div></div><div class="pb">200</div><div class="pb">350</div><div class="pb">400</div></div>
+    <div class="pr" style="border-bottom: none;"><div><div class="pn">Tavuklu Pizza <span class="kcal">(700-850 kcal)</span></div><div class="pi">Tavuk · Biber · Soğan · Domates</div></div><div class="pb">200</div><div class="pb">350</div><div class="pb">400</div></div>
+  </div>
+
+  <!-- ================= SAYFA 2: KAMPANYALAR VE KENDI PIZZANI OLUSTUR ================= -->
+  <div class="page">
+    <div class="sec" style="margin-top: 0;"><h2>Kampanyalar</h2><div class="tl"></div></div>
+    <div class="campbox">
+      <div>
+        <div class="ct">2'li Pizza Kampanyası</div>
+        <div class="cs">Aynı gruptan 2 pizza · Patates · 1 Lt İçecek</div>
+      </div>
+      <div class="cprices">
+        <div class="cpi"><span class="cl">2'li Orta</span><span class="cpb">400</span></div>
+        <div class="cpi"><span class="cl">2'li Büyük</span><span class="cpb">600</span></div>
+        <div class="cpi"><span class="cl">2'li XL</span><span class="cpb">700</span></div>
+      </div>
+    </div>
+
+    <div class="deco">— — — — — — — — — — — — — — — — — — — — — — —</div>
+
+    <div style="text-align:center; margin-top:2mm; margin-bottom: 3mm;">
+      <div style="font-size:21pt; font-weight:700;">Kendi Pizzanı Oluştur</div>
+      <div style="font-size:13.5pt; opacity:0.8; margin-top:0.2mm; font-weight:500;">Hamur · Sos · Mozzarella + İstediğin Malzemeler</div>
+    </div>
+
+    <div class="phdr">
+      <div></div>
+      <div class="ph">Orta</div>
+      <div class="ph">Büyük</div>
+      <div class="ph">XL</div>
+    </div>
+    
+    <div class="pr" style="border-bottom: 2px solid #000;">
+      <div><div class="pn">Base Pizza + 3 Sebze Dahil</div><div class="pi">Hamur · Sos · Mozzarella · 3 Sebze</div></div>
+      <div class="pb">150</div><div class="pb">250</div><div class="pb">300</div>
+    </div>
+
+    <div class="pr">
+      <div><div class="pn">🥬 Sebze Grubu</div><div class="pi">Biber · Mantar · Zeytin · Mısır · Domates · Soğan · Jalapeño</div></div>
+      <div class="pb">20</div><div class="pb">30</div><div class="pb">40</div>
+    </div>
+    <div class="pr">
+      <div><div class="pn">🥩 Et Grubu</div><div class="pi">Salam · Sosis · Tavuk · Sucuk</div></div>
+      <div class="pb">30</div><div class="pb">50</div><div class="pb">60</div>
+    </div>
+    <div class="pr">
+      <div><div class="pn">🥓 Premium Et Grubu</div><div class="pi">Dana Sucuk · Pastırma · Kavurma · Ton Balığı</div></div>
+      <div class="pb">50</div><div class="pb">80</div><div class="pb">100</div>
+    </div>
+    <div class="pr" style="border-bottom: 2px solid #000;">
+      <div><div class="pn">🧀 Peynir Grubu</div><div class="pi">Küp Peynir · Kaşar · Çedar · Beyaz Peynir</div></div>
+      <div class="pb">40</div><div class="pb">70</div><div class="pb">80</div>
+    </div>
+    <div style="font-size:12pt; opacity:0.75; text-align:center; margin-top:3mm; font-weight:600;">
+      Büyük boy malzeme fiyatları ×1.3 · XL boy ×1.5
+    </div>
+  </div>
+
+  <!-- ================= SAYFA 3: BURGERLER ================= -->
+  <div class="page">
+    <div class="sec" style="margin-top: 0;"><h2>Burger</h2><div class="tl"></div></div>
+    <div class="br"><div class="bi"><div class="bn">Hamburger + Patates Kızartması <span class="kcal">(650-800 kcal)</span></div><div class="bing">Marul · Domates · Salatalık Turşusu</div></div><div class="bpb">230</div></div>
+    <div class="br"><div class="bi"><div class="bn">Cheeseburger + Patates Kızartması <span class="kcal">(700-850 kcal)</span></div><div class="bing">Cheddar · Kaşar · Karamelize Soğan · Domates · Salatalık Turşusu</div></div><div class="bpb">250</div></div>
+    <div class="br"><div class="bi"><div class="bn">Tavuk Burger <span class="kcal">(550-700 kcal)</span></div><div class="bing">Çıtır Tavuk Köftesi · Marul · Domates · Salatalık Turşusu</div></div><div class="bpb">200</div></div>
+    <div class="br"><div class="bi"><div class="bn">Meksika Burger <span class="kcal">(700-850 kcal)</span></div><div class="bing">Marul · Domates · Jalapeño · Özel Sos</div></div><div class="bpb">230</div></div>
+    <div class="br"><div class="bi"><div class="bn">Hellim Burger <span class="kcal">(720-870 kcal)</span></div><div class="bing">Hellim Peyniri · Domates · Karamelize Soğan · Salatalık Turşusu</div></div><div class="bpb">240</div></div>
+    <div class="br"><div class="bi"><div class="bn">Mantarlı Burger <span class="kcal">(680-820 kcal)</span></div><div class="bing">Mantar · Kaşar · Domates · Salatalık Turşusu</div></div><div class="bpb">250</div></div>
+    <div class="br"><div class="bi"><div class="bn">Füme Burger <span class="kcal">(750-900 kcal)</span></div><div class="bing">Füme Et · Cheddar · Domates · Karamelize Soğan · Salatalık Turşusu</div></div><div class="bpb">270</div></div>
+    <div class="br"><div class="bi"><div class="bn">Duup Burger <span class="kcal">(780-950 kcal)</span></div><div class="bing">Cheddar · Kaşar · Hellim · Domates · Karamelize Soğan · Salatalık Turşusu</div></div><div class="bpb">260</div></div>
+    <div class="br"><div class="bi"><div class="bn">Antenato Burger <span class="kcal">(800-980 kcal)</span></div><div class="bing">Cheddar · Karamelize Soğan · Mor Lahana Turşusu · Pastırma</div></div><div class="bpb">300</div></div>
+    <div class="br"><div class="bi"><div class="bn">Sporcu Burger <span class="kcal">(650-800 kcal)</span></div><div class="bing">Mor Lahana · Yumurta · Domates</div></div><div class="bpb">250</div></div>
+    <div class="br" style="border-bottom: none;"><div class="bi"><div class="bn">Antenato Dünyası <span class="kcal">(1100-1400 kcal)</span></div><div class="bing">2 Köfte · Cheddar · Kaşar · Karamelize Soğan · Mor Lahana · Pastırma</div></div><div class="bpb">400</div></div>
+  </div>
+
+  <!-- ================= SAYFA 4: MENULER, MAKARNALAR, YAN LEZZETLER ================= -->
+  <div class="page">
+    <div class="menubox" style="margin-top: 0;">
+      <div class="mbt">Menüler</div>
+      <div class="ml">
+        <div><span class="mln">Tekli Menü</span><span class="mls">Burger · Patates · Kutu İçecek</span></div>
+        <div class="mlpb">250</div>
+      </div>
+      <div class="ml">
+        <div><span class="mln">Duup Tektek Menü</span><span class="mls">Burger · Patates · 6 Nugget veya 6 Soğan Halkası · Kutu İçecek</span></div>
+        <div class="mlpb">300</div>
+      </div>
+      <div class="ml">
+        <div><span class="mln">2'li Hamburger / Cheeseburger Menü</span><span class="mls">2 Burger · 2 Patates · 1 Lt İçecek · 4 Nugget · 4 Soğan Halkası</span></div>
+        <div class="mlpb">550</div>
+      </div>
+      <div class="ml">
+        <div><span class="mln">3'lü Hamburger Menü</span><span class="mls">3 Hamburger · 1 Lt İçecek · 6 Nugget · 6 Soğan Halkası</span></div>
+        <div class="mlpb">750</div>
+      </div>
+    </div>
+
+    <div class="sec"><h2>Makarna</h2><div class="tl"></div></div>
+    <div class="sr"><div><span class="srn">Kremalı Mantarlı <span class="kcal">(450-580 kcal)</span></span></div><div class="spb">150</div></div>
+    <div class="sr"><div><span class="srn">Köri Soslu <span class="kcal">(420-550 kcal)</span></span></div><div class="spb">150</div></div>
+    <div class="sr"><div><span class="srn">Napoliten Soslu <span class="kcal">(400-520 kcal)</span></span></div><div class="spb">150</div></div>
+    <div class="sr"><div><span class="srn">Kremalı Tavuklu <span class="kcal">(550-700 kcal)</span></span><span class="srs">80 gr tavuk</span></div><div class="spb">200</div></div>
+    <div class="sr"><div><span class="srn">Napoliten Soslu Tavuklu <span class="kcal">(500-650 kcal)</span></span><span class="srs">80 gr tavuk</span></div><div class="spb">200</div></div>
+    <div class="sr" style="border-bottom: none;"><div><span class="srn">Ton Balıklı <span class="kcal">(480-600 kcal)</span></span></div><div class="spb">200</div></div>
+    <div style="text-align:right; font-size:13pt; font-weight:700; margin-top:1mm;">+ Mozzarella ilave: 50 TL</div>
+
+    <div class="sec"><h2>Yan Lezzetler</h2><div class="tl"></div></div>
+    <div class="yang">
+      <div class="yc"><span class="ycn">Patates</span><span class="ycs">250 gr · 350-450 kcal</span><div class="ycpb">125</div></div>
+      <div class="yc"><span class="ycn">6 Nugget</span><span class="ycs">6 Adet · 280-350 kcal</span><div class="ycpb">100</div></div>
+      <div class="yc"><span class="ycn">Soğan Halkası</span><span class="ycs">6 Adet · 250-320 kcal</span><div class="ycpb">100</div></div>
+      <div class="yc"><span class="ycn">Elma Dilim Patates</span><span class="ycs">250 gr · 300-400 kcal</span><div class="ycpb">125</div></div>
+      <div class="yc mega"><span class="ycn">Mega Kova</span><span class="ycs">Patates · Soğan Halkası · Nugget · Tenders</span><div class="ycpb">300</div></div>
+    </div>
+
+    <div class="alerjen-box">
+      <div class="abt">⚠️ Alerjen Bilgilendirmesi</div>
+      <div class="alerjen-grid">
+        <div class="alerjen-item">🌾 <strong>Gluten</strong> — Hamur, ekmek...</div>
+        <div class="alerjen-item">🥛 <strong>Süt ürünleri</strong> — Tüm peynirler...</div>
+        <div class="alerjen-item">🥚 <strong>Yumurta</strong> — Köfte, nugget...</div>
+        <div class="alerjen-item">🐟 <strong>Balık</strong> — Ton balıklı ürünler</div>
+        <div class="alerjen-item">🌿 <strong>Sarımsak</strong> — Pizza sosu, köfte</div>
+        <div class="alerjen-item">🌰 <strong>Hardal</strong> — Burger dip sos</div>
+        <div class="alerjen-item">⚗️ <strong>Sülfitler</strong> — Turşu, şarküteri</div>
+        <div class="alerjen-item">🫘 <strong>Soya</strong> — Sucuk, sosis</div>
+        <div class="alerjen-item">⭕ <strong>Susam</strong> — Burger ekmeği</div>
+        <div class="alerjen-item">🌿 <strong>Fesleğen</strong> — Pizza sosu</div>
+      </div>
+      <div class="alerjen-note">Ürünlerimiz alerjen içerebilir veya temas etmiş olabilir. Lütfen sipariş öncesi danışınız.</div>
+    </div>
+  </div>
+
+</body>
+</html>
